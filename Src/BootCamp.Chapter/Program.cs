@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Console = System.Console;
 
@@ -23,9 +24,10 @@ namespace BootCamp.Chapter
             string surename = GetString("surename");
             int age = GetInt("age");
             int weight = GetInt("weight in kg");
-            int height = GetInt("height in cm");
+            int height = GetInt("height in mt");
             Console.WriteLine($"{Environment.NewLine}{name} {surename} is {age}, weight is {weight} kg and height is {height} cm.");
-            Console.WriteLine(EvaluateBMI(weight, height));
+            float BMI = EvaluateBMI(weight, height);
+            Console.WriteLine($"BMI is {BMI:f2}");
 
         }
 
@@ -48,14 +50,26 @@ namespace BootCamp.Chapter
             var isInt = int.TryParse(input, out int result);
             if (!isInt)
             {
-                Console.WriteLine($"{input} is not a valid number.");
+                Console.WriteLine($"\"{input}\" is not a valid number.");
                 return -1;
             }
             else return result;
 
         }
 
-        public static string EvaluateBMI(float weight, float height)
+        public static float GetFloat(string text)
+        {
+            Console.WriteLine($"Enter person {text}:");
+            var input = Console.ReadLine();
+            var isFloat = float.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out float result);
+            if (!isFloat)
+            {
+                Console.WriteLine($"\"{input}\" is not a valid number.");
+                return -1;
+            }
+            else return result;
+        }
+        public static float EvaluateBMI(float weight, float height)
         {
             string error1 = "";
             string error2 = "";
@@ -67,17 +81,16 @@ namespace BootCamp.Chapter
             }
             if (height <= 0)
             {
-                error2 = $"{Environment.NewLine}    Weight cannot be equal or less than zero, but was {height}.";
+                error2 = $"{Environment.NewLine}    Height cannot be equal or less than zero, but was {height}.";
             }
             if (weight <= 0 || height <= 0)
             {
-                return $"{Environment.NewLine}Failed calculating BMI. Reason:" + error1 + error2;
+                Console.WriteLine($"{Environment.NewLine}Failed calculating BMI. Reason:" + error1 + error2);
+                return -1;
             }
             else
-            {
-                float heightMt = height / 100.0f;
-                float BMI = weight / (heightMt * heightMt);
-                return $"BMI is {BMI:f2}";
+            {              
+                return weight / (height * height);
             }
         }
 
