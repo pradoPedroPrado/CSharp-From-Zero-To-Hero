@@ -13,11 +13,11 @@ namespace BootCamp.Chapter
             // - FindPersonWithBiggestLoss
             // - FindRichestPerson
             // - FindMostPoorPerson
-            var message = $"Hello{Environment.NewLine}World!";
-            var framed = Framer(message, 2);
+            var message = $"Hola{Environment.NewLine}vieja{Environment.NewLine}podrida";
+            var framed = Frame(message, 1);
             Console.WriteLine(framed);
         }
-        public static string Framer(string message, int padding)
+        public static string Frame(string message, int padding)
 
         {
             var arr = message.Split($"{Environment.NewLine}");
@@ -32,23 +32,27 @@ namespace BootCamp.Chapter
 
             var frame = new string[arr.Length + 2 + padding*2];
 
-            //build top line
+            //top and bottom lines
             frame[0] = "  +";
             for (var i = 0; i < longerLineSize + padding*2; i++)
             {
                 frame[0] += "-";
             }
             frame[0] += "+";
+            frame[frame.Length - 1] = $"{Environment.NewLine}{frame[0]}";
 
-            //top padding lines
+            //padding lines
+            string paddingLine = $"{Environment.NewLine}  |";
+            for (int j = 0; j < longerLineSize + padding * 2; j++)
+            {
+                paddingLine += " ";
+            }
+            paddingLine += "|";
+
             for (var i = 0; i < padding; i++)
             {
-                frame[i + 1] = $"{Environment.NewLine}  |";
-                for (int j = 0; j < longerLineSize + padding * 2; j++)
-                {
-                    frame[i + 1] += " ";
-                }
-                frame[i + 1] += "|";
+                frame[i + 1] = paddingLine;
+                frame[frame.Length-2 -i] = paddingLine;
             }
 
 
@@ -72,20 +76,6 @@ namespace BootCamp.Chapter
                 }
                 frame[i + 1 + padding] += "|";
             }
-            //top padding lines
-            for (var i = frame.Length-2; i > frame.Length - padding - 2; i--)
-            {
-                frame[i] = $"{Environment.NewLine}  |";
-                for (int j = 0; j < longerLineSize + padding * 2; j++)
-                {
-                    frame[i] += " ";
-                }
-                frame[i] += "|";
-            }
-
-
-            //bottom line
-            frame[frame.Length-1] = $"{Environment.NewLine}{frame[0]}";
 
             return String.Join("", frame);
         }
