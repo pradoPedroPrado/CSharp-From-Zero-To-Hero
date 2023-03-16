@@ -94,8 +94,8 @@ namespace BootCamp.Chapter
             {
                 return "";
             }
-            int lengt =items.Length;
-            switch (lengt)
+            int length =items.Length;
+            switch (length)
             {                
                 case 0:
                     return "";
