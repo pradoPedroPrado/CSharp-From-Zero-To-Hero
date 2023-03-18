@@ -7,7 +7,7 @@
         /// </summary>
         public static string FindHighestBalanceEver(string[] peopleAndBalances)
         {
-            return "";
+            return Program.FindHighestBalanceEver(peopleAndBalances);
         }
 
         /// <summary>

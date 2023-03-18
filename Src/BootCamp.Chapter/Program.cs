@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
+using System.Xml.Linq;
 
 namespace BootCamp.Chapter
 {
@@ -8,6 +10,8 @@ namespace BootCamp.Chapter
     {
         static void Main(string[] args)
         {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
             // Print each of the statistical output using Text Table with padding 3:
             // - FindHighestBalanceEver
             // - FindPersonWithBiggestLoss
@@ -16,10 +20,69 @@ namespace BootCamp.Chapter
             var message = $"Hola{Environment.NewLine}vieja{Environment.NewLine}podrida";
             var framed = Frame(message, 1);
             Console.WriteLine(framed);
-            //var items = new[] { "1","2", "3","4" };
-            string[] items = null;
-            Console.WriteLine(ComposeListString(items));
+            //var items = new[] { "1", "2", "3", "4" };
+            var balances = new[] { "Tom, 1, 3, -1", "Gillie, 2, 3, 1", "Thor, 1000, 1001, 1002" };
+
+            //string[] items = null;
+            //Console.WriteLine(ComposeListString(items));
+
+            Console.WriteLine(FindHighestBalanceEver(balances));
+
         }
+
+        public static string FindHighestBalanceEver(string[] balances)
+        {
+            if (balances == null || balances.Length == 0)
+            {
+                return "N/A.";
+            }
+            string name;
+            float highestPersonalBalance;
+            float? highestBalance = null;
+            string[] persosnsWithHighestBalance = null;
+
+            for (int i = 0; i < balances.Length; i++)
+            {
+                string[] balance = balances[i].Split(", ");
+                name = balance[0];
+                highestPersonalBalance = GetHighestPersonalBalance(balance);
+
+                if (highestBalance == null)
+                {
+                    highestBalance = highestPersonalBalance;
+                    persosnsWithHighestBalance = new string[] { name };
+                }
+                else if (highestPersonalBalance == highestBalance)
+                {
+                    persosnsWithHighestBalance = AppendToStringArray(persosnsWithHighestBalance, name);   
+                }
+                else if (highestPersonalBalance > highestBalance)
+                {
+                    persosnsWithHighestBalance = new[] { name };
+                    highestBalance = highestPersonalBalance;
+                }
+            }
+
+                return $"{ComposeListString(persosnsWithHighestBalance)} had the most money ever. ¤{highestBalance}.";
+                //return FormattableString.Invariant($"{ComposeListString(persosnsWithHighestBalance)} had the most money ever. {highestBalance:C0}.");
+        }
+
+        private static float GetHighestPersonalBalance(string[] personalBalance)
+        {
+            float highestPersonalBalance;
+            bool isNumber = float.TryParse(personalBalance[1], out highestPersonalBalance);
+            for (int i = 1; i < personalBalance.Length; i++)
+            {
+                float number;
+                isNumber = float.TryParse(personalBalance[i], out number);
+                if (number > highestPersonalBalance)
+                {
+                    highestPersonalBalance = number;
+                }
+            }
+            return highestPersonalBalance;
+        }
+
         public static string Frame(string message, int padding)
 
         {
@@ -88,15 +151,15 @@ namespace BootCamp.Chapter
             return String.Join("", frame);
         }
 
-        public static string ComposeListString(string[] items)
+        static string ComposeListString(string[] items)
         {
             if (items == null)
             {
                 return "";
             }
-            int length =items.Length;
+            int length = items.Length;
             switch (length)
-            {                
+            {
                 case 0:
                     return "";
                 case 1:
@@ -104,16 +167,45 @@ namespace BootCamp.Chapter
                 case 2:
                     return string.Join(" and ", items);
                 default:
-                    var firsts = "";
-                    for (var i = 0; i < items.Length-1; i++)
+                    var firstsArr = new string[items.Length-1];
+                    for (int i = 0; i < firstsArr.Length; i++)
                     {
-                        firsts += $"{items[i]}, ";
+                        firstsArr[i] = items[i];
                     }
-                    var last = $"and {items[^1]}";
+
+                    string firsts = string.Join(", ", firstsArr);
+                    var last = $" and {items[^1]}";
                     return firsts + last;
-            }            
+            }
         }
 
+        //static string ComposeListString(string[] items) //this is an optimization of my method that Bing chat sugested 
+        //{
+        //    if (items == null || items.Length == 0)
+        //    {
+        //        return "";
+        //    }
+        //    var sb = new StringBuilder();
+        //    sb.AppendJoin(", ", items[..^1]); // append all items except the last one
+        //    if (items.Length > 1)
+        //    {
+        //        sb.Append(" and "); // append the conjunction
+        //    }
+        //    sb.Append(items[items.Length - 1]); // append the last item
+        //    return sb.ToString();
+        //}
+
+        static string[] AppendToStringArray(string[] items, string item)
+        {
+            string[] newArray = new string[items.Length + 1];
+            for (int i = 0; i < items.Length; i++)
+            {
+                newArray[i] = items[i];
+            }
+            newArray[^1] = item;
+            return newArray;
+
+        }
 
     }
 }
