@@ -15,7 +15,7 @@
         /// </summary>
         public static string FindPersonWithBiggestLoss(string[] peopleAndBalances)
         {
-            return "";
+            return Program.FindPersonWithBiggestLoss(peopleAndBalances);
         }
 
         /// <summary>
