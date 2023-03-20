@@ -15,21 +15,13 @@ namespace BootCamp.Chapter
             
             // Print each of the statistical output using Text Table with padding 3:
             // - FindHighestBalanceEver
+            Console.WriteLine(Frame(FindHighestBalanceEver(PeoplesBalances.Balances), 3));
             // - FindPersonWithBiggestLoss
+            Console.WriteLine(Frame(FindPersonWithBiggestLoss(PeoplesBalances.Balances), 3));
             // - FindRichestPerson
+            Console.WriteLine(Frame(FindRichestPerson(PeoplesBalances.Balances), 3));
             // - FindMostPoorPerson
-            var message = $"Hola{Environment.NewLine}vieja{Environment.NewLine}podrida";
-            var framed = Frame(message, 1);
-            Console.WriteLine(framed);
-            //var items = new[] { "1", "2", "3", "4" };
-            var balances = new[] { "Tom, 1, 0" };
-
-            //string[] items = null;
-            //Console.WriteLine(ComposeListString(items));
-
-            Console.WriteLine(FindPersonWithBiggestLoss(balances));
-            //Console.WriteLine(FindPersonWithBiggestLoss(PeoplesBalances.Balances));
-
+            Console.WriteLine(Frame(FindMostPoorPerson(PeoplesBalances.Balances), 3));
         }
 
         public static string FindHighestBalanceEver(string[] balances)
@@ -112,6 +104,7 @@ namespace BootCamp.Chapter
             }
             CultureInfo ci = (CultureInfo)CultureInfo.InvariantCulture.Clone();
             ci.NumberFormat.CurrencyNegativePattern = 1;
+            ci.NumberFormat.CurrencyGroupSeparator = "";
             CultureInfo.CurrentCulture = ci;
             return $"{ComposeListString(persosnsWithBiggestLoss)} lost the most money. {biggestLoss:c0}.";
         }
@@ -123,7 +116,7 @@ namespace BootCamp.Chapter
             }
             string name;
             float lastBalance;
-            float? lowestBalance = null;
+            float? lowestLastBalance = null;
             string[] persosnsWithLeastMoney = null;
 
             for (int i = 0; i < balances.Length; i++)
@@ -135,41 +128,99 @@ namespace BootCamp.Chapter
                 name = balance[0];
                 bool isNumber = float.TryParse(balance[^1], out lastBalance);
 
-                if (lowestBalance == null)
+                if (lowestLastBalance == null)
                 {
-                    lowestBalance = lastBalance;
+                    lowestLastBalance = lastBalance;
                     persosnsWithLeastMoney = new string[] { name };
                 }
-                else if (lastBalance == lowestBalance)
+                else if (lastBalance == lowestLastBalance)
                 {
                     persosnsWithLeastMoney = AppendToStringArray(persosnsWithLeastMoney, name);   
                 }
-                else if (lastBalance < lowestBalance)
+                else if (lastBalance < lowestLastBalance)
                 {
                     persosnsWithLeastMoney = new[] { name };
-                    lowestBalance = lastBalance;
+                    lowestLastBalance = lastBalance;
                 }
             }
 
-            if (lowestBalance == null)
+            if (lowestLastBalance == null)
             {
                 return "N/A.";
             }
             CultureInfo ci = (CultureInfo)CultureInfo.InvariantCulture.Clone();
             ci.NumberFormat.CurrencyNegativePattern = 1;
+            ci.NumberFormat.CurrencyGroupSeparator = "";
             CultureInfo.CurrentCulture = ci;
             if (persosnsWithLeastMoney.Length == 1)
             {
-            return $"{ComposeListString(persosnsWithLeastMoney)} has the least money. {lowestBalance:c0}.";
+            return $"{ComposeListString(persosnsWithLeastMoney)} has the least money. {lowestLastBalance:c0}.";
             }
             else
             {
-                return $"{ComposeListString(persosnsWithLeastMoney)} have the least money. {lowestBalance:c0}.";
+                return $"{ComposeListString(persosnsWithLeastMoney)} have the least money. {lowestLastBalance:c0}.";
             }
         }
+        public static string FindRichestPerson(string[] balances)
+        {
+            if (balances == null || balances.Length == 0)
+            {
+                return "N/A.";
+            }
+            string name;
+            float lastBalance;
+            float? HighestLastBalance = null;
+            string[] richestPersons = null;
 
+            for (int i = 0; i < balances.Length; i++)
+            {
+                string[] balance = balances[i].Split(", ");
+
+                if (balance.Length < 2) break;
+
+                name = balance[0];
+                bool isNumber = float.TryParse(balance[^1], out lastBalance);
+
+                if (HighestLastBalance == null)
+                {
+                    HighestLastBalance = lastBalance;
+                    richestPersons = new string[] { name };
+                }
+                else if (lastBalance == HighestLastBalance)
+                {
+                    richestPersons = AppendToStringArray(richestPersons, name);   
+                }
+                else if (lastBalance > HighestLastBalance)
+                {
+                    richestPersons = new[] { name };
+                    HighestLastBalance = lastBalance;
+                }
+            }
+
+            if (HighestLastBalance == null)
+            {
+                return "N/A.";
+            }
+            CultureInfo ci = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            ci.NumberFormat.CurrencyNegativePattern = 1;
+            ci.NumberFormat.CurrencyGroupSeparator = "";
+            CultureInfo.CurrentCulture = ci;
+            if (richestPersons.Length == 1)
+            {
+            return $"{ComposeListString(richestPersons)} is the richest person. {HighestLastBalance:c0}.";
+            }
+            else
+            {
+                return $"{ComposeListString(richestPersons)} are the richest people. {HighestLastBalance:c0}.";
+            }
+        }
         private static float GetHighestPersonalBalance(string[] personalBalance)
         {
+            CultureInfo ci = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            ci.NumberFormat.CurrencyNegativePattern = 1;
+            ci.NumberFormat.CurrencyGroupSeparator = "";
+            CultureInfo.CurrentCulture = ci;
+
             float highestPersonalBalance;
             bool isNumber = float.TryParse(personalBalance[1], out highestPersonalBalance);
             for (int i = 1; i < personalBalance.Length; i++)

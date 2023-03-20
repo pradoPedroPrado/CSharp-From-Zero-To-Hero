@@ -23,7 +23,7 @@
         /// </summary>
         public static string FindRichestPerson(string[] peopleAndBalances)
         {
-            return "";
+            return Program.FindRichestPerson(peopleAndBalances);
         }
 
         /// <summary>
