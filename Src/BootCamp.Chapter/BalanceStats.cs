@@ -31,7 +31,7 @@
         /// </summary>
         public static string FindMostPoorPerson(string[] peopleAndBalances)
         {
-            return "";
+            return Program.FindMostPoorPerson(peopleAndBalances);
         }
     }
 }
