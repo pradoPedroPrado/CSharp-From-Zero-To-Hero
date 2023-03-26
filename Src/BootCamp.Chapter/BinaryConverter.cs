@@ -13,7 +13,7 @@ namespace BootCamp.Chapter
 
         public static string ToBinary(long number)
         {
-            return "";
+            return Program.DecimalToBinary(number);
         }
     }
 }
