@@ -8,7 +8,7 @@ namespace BootCamp.Chapter
     {
         public static long ToInteger(string binary)
         {
-            return 0;
+            return Program.BinaryToDecimal(binary);
         }
 
         public static string ToBinary(long number)
