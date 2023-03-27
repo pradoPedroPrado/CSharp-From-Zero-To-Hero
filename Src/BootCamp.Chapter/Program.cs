@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BootCamp.Chapter
@@ -68,7 +67,7 @@ namespace BootCamp.Chapter
         }
         public static char GetArrows(char character)
         {
-            
+
             char arrow;
             if (character == 'a' || character == 'A')
             {
@@ -91,16 +90,6 @@ namespace BootCamp.Chapter
                 arrow = '\u21a5';
             }
             return arrow;
-        }
-        private static string ToHexedString(byte[] bytes)
-        {
-            var sb = new StringBuilder();
-            foreach (var b in bytes)
-            {
-                sb.Append($"{b:X} ");
-            }
-
-            return sb.ToString();
         }
 
 
