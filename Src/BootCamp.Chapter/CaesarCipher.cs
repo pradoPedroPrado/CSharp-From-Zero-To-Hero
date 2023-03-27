@@ -11,12 +11,12 @@ namespace BootCamp.Chapter
     {
         public static string Encrypt(string message, byte shift)
         {
-            return message;
+            return Program.Encrypt(message,shift);
         }
 
         public static string Decrypt(string message, byte shift)
         {
-            return message;
+            return Program.Decrypt(message,shift);
         }
     }
 }
