@@ -17,7 +17,22 @@ namespace BootCamp.Chapter
 
         public Item[] GetItems(string name)
         {
-            return new Item[0];
+            Item[] items = new Item[0];
+            for (int i = 0; i < _items.Length; i++)
+            {
+                if (name == _items[i].GetName())
+                {
+                    Item[] itemsTemp = items;
+                    items = new Item[items.Length + 1];
+                    for (int j = 0; j < itemsTemp.Length; j++)
+                    {
+                        items[j] = itemsTemp[j];
+                    }
+                    items[^1] = _items[i];
+                }
+            }
+
+            return items;
         }
 
         public void AddItem(Item item)

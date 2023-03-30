@@ -62,7 +62,8 @@
         /// <returns>Price of an item.</returns>
         public decimal Buy(Item item)
         {
-            return 0;
+            _money -= item.GetPrice();
+            return item.GetPrice();
         }
 
         /// <summary>
@@ -76,7 +77,22 @@
         /// </returns>
         public Item Sell(string item)
         {
-            return null;
+            Item itemToSell = null;
+            Item[] items = _inventory.GetItems();
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i].GetName() == item)
+                {
+                    itemToSell = items[i];
+                    break;
+                }
+            }
+            if (itemToSell == null) return null;
+            else
+            {
+                _money += itemToSell.GetPrice();
+                return itemToSell;
+            }
         }
     }
 }
