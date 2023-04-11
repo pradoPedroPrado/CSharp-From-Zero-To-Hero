@@ -5,11 +5,8 @@ using System.Text;
 
 namespace BootCamp.Chapter
 {
-    internal class ComputerFactory
+    public abstract class ComputerFactory
     {
-        public DesktopComputer Assemble()
-        {
-            DesktopComputer computer = new DesktopComputer();
-        }
+        public abstract DesktopComputer Assemble();
     }
 }

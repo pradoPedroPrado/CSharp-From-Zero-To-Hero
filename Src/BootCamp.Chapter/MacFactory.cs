@@ -5,17 +5,13 @@ using BootCamp.Chapter.Computer;
 
 namespace BootCamp.Chapter
 {
-    public class MacFactory
+    public class MacFactory : ComputerFactory
     {
-        public DesktopComputer Assemble()
+        public override DesktopComputer Assemble()
         {            
             DesktopComputer computer = new DesktopComputer();
-            PrepareBody(computer);
-            InstallCPU(computer);
-            InstallRAM(computer);
-            InstallGPU(computer);
-            InstallCooler(computer);
-            InstallMotherboard(computer);
+            Body body = new Body();
+            computer.SetBody(body);
             return computer;
         }
     }
