@@ -8,8 +8,15 @@ namespace BootCamp.Chapter
     public class MacFactory
     {
         public DesktopComputer Assemble()
-        {
-            return new DesktopComputer();
+        {            
+            DesktopComputer computer = new DesktopComputer();
+            PrepareBody(computer);
+            InstallCPU(computer);
+            InstallRAM(computer);
+            InstallGPU(computer);
+            InstallCooler(computer);
+            InstallMotherboard(computer);
+            return computer;
         }
     }
 }
