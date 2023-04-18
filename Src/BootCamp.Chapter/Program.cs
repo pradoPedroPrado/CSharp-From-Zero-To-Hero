@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
@@ -6,12 +7,15 @@ namespace BootCamp.Chapter
 {
     class Program
     {
-        static readonly ConsoleLogger _logger = new ConsoleLogger();
+        static readonly ILogger[] loggers = {
+            new FileLogger(),
+            new ConsoleLogger() };
         static void Main(string[] args)
         {
+                Log("Program started.");
+
             try
             {
-                _logger.Log("Program started.");
                 string name = GetPersonData("name");
                 string surename = GetPersonData("surename");
                 int age = int.Parse(GetPersonData("age"));
@@ -29,16 +33,22 @@ namespace BootCamp.Chapter
                 BMI = CalculateBMI(weight, height);
                 Console.WriteLine($"{name} {surename} is {age}, weight is {weight} kg and height is {height} cm.");
                 Console.WriteLine($"BMI is {BMI:f2}");
-                _logger.Log("Program terminated.");
-
-
             }
             catch (Exception ex)
             {
-                _logger.Log(ex.ToString());
+                Log(ex.ToString());
             }        
+                Log("Program terminated.");
         }
 
+        public static void Log(string message)
+        {
+            foreach(ILogger logger in loggers)
+            {
+                logger.Log(message);
+            }
+
+        }
         public static string GetPersonData(string text)
         {
             Console.WriteLine($"Enter person {text}:");
