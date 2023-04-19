@@ -1,9 +1,12 @@
-﻿namespace BootCamp.Chapter
+﻿using System.Collections.Generic;
+
+namespace BootCamp.Chapter
 {
     public class Shop
     {
-        public decimal Money { get ; set ; }
-        public Inventory Inventory { get ; set; }
+        public decimal Money { get; set; }
+        public Inventory Inventory { get; set; }
+        public List<Item> Items { get => Inventory.Items; }
 
         public Shop()
         {
@@ -19,9 +22,9 @@
 
         }
 
-        public Item[] GetItems()
+        public List<Item> GetItems()
         {
-            return Inventory.Items();
+            return Inventory.Items;
         }
 
         /// <summary>
@@ -30,12 +33,10 @@
         /// </summary>
         public void Add(Item item)
         {
-            Item[] items = Inventory.Items();
-            foreach (var itemInInventory in items)
+            if (!Inventory.Items.Contains(item))
             {
-                if (itemInInventory.Name == item.Name) return;
+                Inventory.Items.Add(item);
             }
-            Inventory.AddItem(item);
         }
 
         /// <summary>
@@ -44,9 +45,9 @@
         /// </summary>
         /// <param name="name"></param>
         public void Remove(string name)
-        {   
-            Item item = new Item(name,0,0);
-            Inventory.RemoveItem(item);
+        {
+            Item itemToRemove = Inventory.Items.Find(x => x.Name == name);
+            Inventory.Items.Remove(itemToRemove);
         }
 
         /// <summary>
@@ -57,8 +58,12 @@
         /// <returns>Price of an item.</returns>
         public decimal Buy(Item item)
         {
-            Money -= item.Price;
-            return item.Price;
+            if (item.Price <= Money)
+            {
+                Money -= item.Price;
+                return item.Price;
+            }
+            else { return 0; }
         }
 
         /// <summary>
@@ -72,22 +77,12 @@
         /// </returns>
         public Item Sell(string item)
         {
-            Item itemToSell = null;
-            Item[] items = Inventory.Items();
-            for (int i = 0; i < items.Length; i++)
-            {
-                if (items[i].Name == item)
-                {
-                    itemToSell = items[i];
-                    break;
-                }
-            }
-            if (itemToSell == null) return null;
-            else
+            Item itemToSell = Inventory.Items.Find(x => x.Name == item);
+            if (itemToSell != null)
             {
                 Money += itemToSell.Price;
-                return itemToSell;
             }
+            return itemToSell;
         }
     }
 }
