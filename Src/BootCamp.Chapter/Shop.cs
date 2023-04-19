@@ -2,31 +2,26 @@
 {
     public class Shop
     {
-        private decimal _money;
-        public decimal GetMoney()
-        {
-            return _money;
-        }
-
-        private Inventory _inventory;
+        public decimal Money { get ; set ; }
+        public Inventory Inventory { get ; set; }
 
         public Shop()
         {
-            _inventory = new Inventory();
-            _money = 0;
+            Inventory = new Inventory();
+            Money = 0;
 
         }
 
         public Shop(decimal money)
         {
-            _money = money;
-            _inventory = new Inventory();
+            Money = money;
+            Inventory = new Inventory();
 
         }
 
         public Item[] GetItems()
         {
-            return _inventory.GetItems();
+            return Inventory.Items();
         }
 
         /// <summary>
@@ -35,12 +30,12 @@
         /// </summary>
         public void Add(Item item)
         {
-            Item[] items = _inventory.GetItems();
+            Item[] items = Inventory.Items();
             foreach (var itemInInventory in items)
             {
-                if (itemInInventory.GetName() == item.GetName()) return;
+                if (itemInInventory.Name == item.Name) return;
             }
-            _inventory.AddItem(item);
+            Inventory.AddItem(item);
         }
 
         /// <summary>
@@ -51,7 +46,7 @@
         public void Remove(string name)
         {   
             Item item = new Item(name,0,0);
-            _inventory.RemoveItem(item);
+            Inventory.RemoveItem(item);
         }
 
         /// <summary>
@@ -62,8 +57,8 @@
         /// <returns>Price of an item.</returns>
         public decimal Buy(Item item)
         {
-            _money -= item.GetPrice();
-            return item.GetPrice();
+            Money -= item.Price;
+            return item.Price;
         }
 
         /// <summary>
@@ -78,10 +73,10 @@
         public Item Sell(string item)
         {
             Item itemToSell = null;
-            Item[] items = _inventory.GetItems();
+            Item[] items = Inventory.Items();
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i].GetName() == item)
+                if (items[i].Name == item)
                 {
                     itemToSell = items[i];
                     break;
@@ -90,7 +85,7 @@
             if (itemToSell == null) return null;
             else
             {
-                _money += itemToSell.GetPrice();
+                Money += itemToSell.Price;
                 return itemToSell;
             }
         }

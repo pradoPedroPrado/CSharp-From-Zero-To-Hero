@@ -1,18 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BootCamp.Chapter
 {
     public class Inventory
     {
-        private Item[] _items;
-        public Item[] GetItems()
-        {
-            return _items;
-        }
-
+        private List<Item> _items;
         public Inventory()
         {
-            _items = new Item[0];
+            _items = new List<Item>();
         }
 
         public Item[] GetItems(string name)
@@ -20,7 +16,7 @@ namespace BootCamp.Chapter
             Item[] items = new Item[0];
             for (int i = 0; i < _items.Length; i++)
             {
-                if (name == _items[i].GetName())
+                if (name == _items[i].Name)
                 {
                     Item[] itemsTemp = items;
                     items = new Item[items.Length + 1];
@@ -65,11 +61,11 @@ namespace BootCamp.Chapter
         /// </summary>
         public void RemoveItem(Item item)
         {
-            string name = item.GetName();
+            string name = item.Name;
             int index = -1;
             for (int i = 0; i < _items.Length; i++)
             {
-                if(name == _items[i].GetName())
+                if(name == _items[i].Name)
                 {
                     index = i; break;
                 }
