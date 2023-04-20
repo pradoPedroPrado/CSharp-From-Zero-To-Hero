@@ -1,10 +1,10 @@
 ﻿namespace BootCamp.Chapter
 {
     // TODO: make a struct and add validation and other needed methods (if needed)
-    public class Credentials
+    public readonly struct Credentials
     {
-        public string Username;
-        public string Password;
+        public readonly string Username;
+        public readonly string Password;
 
         public Credentials(string username, string password)
         {
