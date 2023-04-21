@@ -29,24 +29,10 @@ namespace BootCamp.Chapter
         {
             string validUserName = UserNameValidation();
             string validPassword = PasswordValidation();
-
-        }
-
-        private string PasswordValidation()
-        {
-            Console.WriteLine("Enter your new password:");
-            byte[] passwordBytes = Encoding.Unicode.GetBytes(Console.ReadLine());
-            Console.WriteLine("Confirm password:");
-            byte[] confirmPasswordBytes = Encoding.Unicode.GetBytes(Console.ReadLine());
-            if (Encoding.Unicode.GetString(passwordBytes) == Encoding.Unicode.GetString(confirmPasswordBytes))
+            bool isCredentials = Credentials.TryParse($"{validUserName},{validPassword}", out Credentials credentials);
+            if (isCredentials)
             {
-                Console.WriteLine("Password accepted.");
-                return passwordBytes.ToString();
-            }
-            else
-            {
-                Console.WriteLine($"Password doesn't match.");
-                return PasswordValidation();
+                Register(credentials); 
             }
         }
 
@@ -66,7 +52,6 @@ namespace BootCamp.Chapter
                 return UserNameValidation();
             }
         }
-
         private bool TryParseUserName(string input, out string userName)
         {
             userName = default;
@@ -80,6 +65,23 @@ namespace BootCamp.Chapter
             {
                 userName = input;
                 return true;
+            }
+        }
+        private string PasswordValidation()
+        {
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+            Console.WriteLine("Confirm password:");
+            string confirmPassword = Console.ReadLine();
+            if (password == confirmPassword)
+            {
+                Console.WriteLine("Password accepted.");
+                return password;
+            }
+            else
+            {
+                Console.WriteLine($"Password doesn't match.");
+                return PasswordValidation();
             }
         }
 
