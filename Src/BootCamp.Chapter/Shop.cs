@@ -1,28 +1,30 @@
-﻿namespace BootCamp.Chapter
+﻿using System.Collections.Generic;
+
+namespace BootCamp.Chapter
 {
     public class Shop
     {
-        private decimal _money;
-        public decimal GetMoney()
-        {
-            return _money;
-        }
-
-        private Inventory _inventory;
+        public decimal Money { get; set; }
+        public Inventory Inventory { get; set; }
+        public List<Item> Items { get => Inventory.Items; }
 
         public Shop()
         {
+            Inventory = new Inventory();
+            Money = 0;
 
         }
 
         public Shop(decimal money)
         {
-            _money = money;
+            Money = money;
+            Inventory = new Inventory();
+
         }
 
-        public Item[] GetItems()
+        public List<Item> GetItems()
         {
-            return _inventory.GetItems();
+            return Inventory.Items;
         }
 
         /// <summary>
@@ -31,6 +33,10 @@
         /// </summary>
         public void Add(Item item)
         {
+            if (!Inventory.Items.Contains(item))
+            {
+                Inventory.Items.Add(item);
+            }
         }
 
         /// <summary>
@@ -40,6 +46,8 @@
         /// <param name="name"></param>
         public void Remove(string name)
         {
+            Item itemToRemove = Inventory.Items.Find(x => x.Name == name);
+            Inventory.Items.Remove(itemToRemove);
         }
 
         /// <summary>
@@ -50,7 +58,12 @@
         /// <returns>Price of an item.</returns>
         public decimal Buy(Item item)
         {
-            return 0;
+            if (item.Price <= Money)
+            {
+                Money -= item.Price;
+                return item.Price;
+            }
+            else { return 0; }
         }
 
         /// <summary>
@@ -64,7 +77,12 @@
         /// </returns>
         public Item Sell(string item)
         {
-            return null;
+            Item itemToSell = Inventory.Items.Find(x => x.Name == item);
+            if (itemToSell != null)
+            {
+                Money += itemToSell.Price;
+            }
+            return itemToSell;
         }
     }
 }
