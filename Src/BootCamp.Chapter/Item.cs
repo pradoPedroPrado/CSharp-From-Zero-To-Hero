@@ -1,4 +1,6 @@
-﻿namespace BootCamp.Chapter
+﻿using System;
+
+namespace BootCamp.Chapter
 {
     public class Item
     {
@@ -8,7 +10,7 @@
 
         public Item(string name, decimal price, float weight)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException("Parameter name can not be null.");
             Price = price;
             Weight = weight;
         }

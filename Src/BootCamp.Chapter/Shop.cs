@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BootCamp.Chapter
 {
@@ -22,10 +23,10 @@ namespace BootCamp.Chapter
 
         }
 
-        public List<Item> GetItems()
-        {
-            return Inventory.Items;
-        }
+        //public List<Item> GetItems()
+        //{
+        //    return Inventory.Items;
+        //}
 
         /// <summary>
         /// Adds item to the stock.
@@ -33,6 +34,7 @@ namespace BootCamp.Chapter
         /// </summary>
         public void Add(Item item)
         {
+            item = item ?? throw new ArgumentNullException("Item can´t be null.");
             if (!Inventory.Items.Contains(item))
             {
                 Inventory.Items.Add(item);
@@ -46,8 +48,10 @@ namespace BootCamp.Chapter
         /// <param name="name"></param>
         public void Remove(string name)
         {
+            name = name ?? throw new ArgumentNullException("Name can´t be null.");
             Item itemToRemove = Inventory.Items.Find(x => x.Name == name);
             Inventory.Items.Remove(itemToRemove);
+
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace BootCamp.Chapter
         /// </returns>
         public Item Sell(string item)
         {
+            if (string.IsNullOrEmpty(item)) { throw new ArgumentNullException("Null or empty item not permited."); }
             Item itemToSell = Inventory.Items.Find(x => x.Name == item);
             if (itemToSell != null)
             {

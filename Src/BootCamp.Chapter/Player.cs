@@ -1,4 +1,5 @@
 ﻿using BootCamp.Chapter.Items;
+using System;
 using System.Collections.Generic;
 
 namespace BootCamp.Chapter
@@ -18,22 +19,19 @@ namespace BootCamp.Chapter
         /// </summary>
         private const int baseCarryWeight = 30;
 
-        private string _name;
-        public string Name { get => _name; set => _name = value; }
-        private int _hp;
-        public int Hp { get => _hp; set => _hp = value; }
-
+        public string Name { get ; private set; }
+        public int Hp { get; private set; }
 
         /// <summary>
         /// Each point of strength allows extra 10 kg to carry.
         /// </summary>
         private int _strenght;
-        public int Strenght { get => _strenght; set => _strenght = value; }
+        public int Strenght { get; private set; }
 
         /// <summary>
         /// Player items. There can be multiple of items with same name.
         /// </summary>
-        private Inventory _inventory;
+        public Inventory Inventory { get; private set; }
         /// <summary>
         /// Needed only for the extra task.
         /// </summary>
@@ -42,7 +40,7 @@ namespace BootCamp.Chapter
 
         public Player()
         {
-            _inventory = new Inventory();
+            Inventory = new Inventory();
         }
 
         /// <summary>
@@ -50,7 +48,7 @@ namespace BootCamp.Chapter
         /// </summary>
         public List<Item> GetItems()
         {
-            return _inventory.Items;
+            return Inventory.Items;
         }
 
         /// <summary>
@@ -58,12 +56,14 @@ namespace BootCamp.Chapter
         /// </summary>
         public void AddItem(Item item)
         {
-            _inventory.AddItem(item);
+            item = item ?? throw new ArgumentNullException("Item can´t be null.");
+            Inventory.AddItem(item);
         }
 
         public void Remove(Item item)
         {
-            _inventory.RemoveItem(item);
+            item = item ?? throw new ArgumentNullException("Item can´t be null.");
+            Inventory.RemoveItem(item);
         }
 
         /// <summary>
@@ -71,8 +71,9 @@ namespace BootCamp.Chapter
         /// </summary>
         /// <param name="name"></param>
         public List<Item> GetItems(string name)
-        {        
-            return _inventory.GetItems(name);
+        {
+            if (string.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            return Inventory.GetItems(name);
         }
 
         #region Extra challenge: Equipment
