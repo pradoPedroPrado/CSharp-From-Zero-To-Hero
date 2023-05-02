@@ -1,5 +1,4 @@
-﻿using BootCamp.Chapter.School1;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BootCamp.Chapter.School2
 {

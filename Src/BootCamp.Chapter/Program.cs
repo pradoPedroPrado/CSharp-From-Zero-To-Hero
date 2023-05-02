@@ -39,7 +39,7 @@ namespace BootCamp.Chapter
 
             bool isThere = false;
             int id = highSchool.Students.ElementAt(1).Id;
-            //int id = 69;
+            //int id = 80085;
             Console.WriteLine($"Student ID to search for: {id}");
 
             IStudentGetter<IStudent>[] schools = { middleSchool, highSchool };
@@ -52,7 +52,7 @@ namespace BootCamp.Chapter
                 if (studentToSearch != null)
                 {
                     isThere = true;
-                    string nameOfSchool = school.GetType().Namespace;
+                    string nameOfSchool = school.GetType().Name;
                     Console.WriteLine($"Found student with id: {studentToSearch.Id} on {nameOfSchool}");
                     break;
                 }
