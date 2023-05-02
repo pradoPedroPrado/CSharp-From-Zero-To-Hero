@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace BootCamp.Chapter
+namespace BootCamp.Chapter.School1
 {
-    public interface ISchool<TStudent> where TStudent : IStudent
+    public interface ISchool<out TStudent> where TStudent : IStudent
     {
-        void Add(TStudent student);
+        void Add(IStudent student);
         TStudent GetStudent(int id);
     }
 
@@ -17,14 +17,13 @@ namespace BootCamp.Chapter
             _students = new List<TStudent>();
         }
 
-        public School(List<TStudent> students)
-        {
-            _students = students;
-        }
-
         public void Add(TStudent student)
         {
             _students.Add(student);
+        }
+        public void Add(IStudent student)
+        {
+            _students.Add((TStudent)student);
         }
 
         public TStudent GetStudent(int id)
@@ -38,18 +37,10 @@ namespace BootCamp.Chapter
         public MiddleSchool() : base()
         {
         }
-
-        public MiddleSchool(List<MiddleSchoolStudent> students) : base(students)
-        {
-        }
     }
     public class HighSchool : School<HighSchoolStudent>
     {
         public HighSchool()
-        {
-        }
-
-        public HighSchool(List<HighSchoolStudent> students) : base(students)
         {
         }
     }

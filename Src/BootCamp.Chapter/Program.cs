@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using static BootCamp.Chapter.MiddleSchoolStudent;
+﻿using BootCamp.Chapter.School2;
+using System;
+using System.Linq;
 
 namespace BootCamp.Chapter
 {
@@ -8,27 +8,57 @@ namespace BootCamp.Chapter
     {
         static void Main(string[] args)
         {
-            MiddleSchoolStudent middleSchoolStudent = new MiddleSchoolStudent();
-            Console.WriteLine(middleSchoolStudent.Id);
-            ISchool<MiddleSchoolStudent> middleSchool = new MiddleSchool();
-            middleSchool.Add(middleSchoolStudent);
-
-            HighSchoolStudent highSchoolStudent = new HighSchoolStudent();
-            Console.WriteLine(highSchoolStudent.Id);
-            ISchool<IStudent> highSchool = new HighSchool();
-            highSchool.Add(highSchoolStudent);
-
-            List<ISchool<IStudent>> schools = new List<ISchool<IStudent>>();
-
-            schools.Add(highSchool);
 
 
-            bool hasStudent = false;
-            if (middleSchool.GetStudent(middleSchoolStudent.Id) != null) { hasStudent = true; }
-            Console.WriteLine($"There is the student with id {middleSchoolStudent.Id} = {hasStudent}");
-            hasStudent = false;
-            if (middleSchool.GetStudent(37) != null) { hasStudent = true; }
-            Console.WriteLine($"There is the student with id {37} = {hasStudent}");
+            School<MiddleSchoolStudent> middleSchool = new MiddleSchool();
+            School<HighSchoolStudent> highSchool = new HighSchool();
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                MiddleSchoolStudent student = new MiddleSchoolStudent();
+                middleSchool.Add(student);
+            }
+            Console.WriteLine("middleSchool students:");
+            foreach (MiddleSchoolStudent student in middleSchool.Students)
+            {
+                Console.WriteLine(student.Id);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                HighSchoolStudent student = new HighSchoolStudent();
+                highSchool.Add(student);
+            }
+            Console.WriteLine("highSchool students:");
+            foreach (HighSchoolStudent student in highSchool.Students)
+            {
+                Console.WriteLine(student.Id);
+            }
+
+
+            bool isThere = false;
+            int id = highSchool.Students.ElementAt(1).Id;
+            //int id = 69;
+            Console.WriteLine($"Student ID to search for: {id}");
+
+            IStudentGetter<IStudent>[] schools = { middleSchool, highSchool };
+
+            foreach (IStudentGetter<IStudent> school in schools)
+            {
+                IStudent studentToSearch = school.GetStudent(id);
+                //IStudent studentToSearch = school.GetStudent(middleSchool.Students.ElementAt(1).Id);
+
+                if (studentToSearch != null)
+                {
+                    isThere = true;
+                    string nameOfSchool = school.GetType().Namespace;
+                    Console.WriteLine($"Found student with id: {studentToSearch.Id} on {nameOfSchool}");
+                    break;
+                }
+            }
+
+            if (!isThere) { Console.WriteLine($"Student with ID {id} not found."); }
 
 
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BootCamp.Chapter
 {
-    internal interface Iteacher
+    public interface ITeacher<TSubject> where TSubject : ISubject
     {
     }
 }
