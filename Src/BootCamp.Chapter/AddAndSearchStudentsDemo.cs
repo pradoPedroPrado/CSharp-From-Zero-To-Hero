@@ -4,7 +4,7 @@ namespace BootCamp.Chapter
 {
     internal static class AddAndSearchStudentsDemo
     {
-        public static void RunDemo()
+        public static void Run()
         {
             School<MiddleSchoolStudent> middleSchool = new MiddleSchool();
             School<HighSchoolStudent> highSchool = new HighSchool();

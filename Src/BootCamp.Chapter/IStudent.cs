@@ -11,51 +11,32 @@ namespace BootCamp.Chapter
             where TSubject : ISubject;
     }
 
-    public class MiddleSchoolStudent : IStudent
+    public abstract class Student : IStudent
     {
         public int Id { get; }
 
-        public MiddleSchoolStudent(int id)
-        {
-            Id = id;
-        }
-
-        public MiddleSchoolStudent()
+        public Student()
         {
             Random random = new Random();
             Id = random.Next(int.MaxValue);
         }
 
-        public void LearnFrom<TTeacher, TSubject>(TTeacher teacher)
-            where TTeacher : ITeacher<TSubject>
-            where TSubject : ISubject
-        {
-            throw new NotImplementedException();
-        }
-
-    }
-
-    public class HighSchoolStudent : IStudent
-    {
-        public int Id { get; }
-
-        public HighSchoolStudent(int id)
-        {
-            Id = id;
-        }
-
-        public HighSchoolStudent()
-        {
-            Random random = new Random();
-            Id = random.Next(int.MaxValue);
-        }
 
         public void LearnFrom<TTeacher, TSubject>(TTeacher teacher)
             where TTeacher : ITeacher<TSubject>
             where TSubject : ISubject
         {
-            throw new NotImplementedException();
+            {
+                string subjectType = typeof(TSubject).Name;
+                string teacherType = typeof(TTeacher).Name;
+                Console.WriteLine($"Student {Id} is learning {subjectType} from {teacherType}.");
+            }
+
         }
     }
+
+    public class MiddleSchoolStudent : Student { }
+
+    public class HighSchoolStudent : Student { }
 
 }
