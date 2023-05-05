@@ -4,8 +4,9 @@
     {
         static void Main(string[] args)
         {
-            TeachersAndStudentsDemo.Run();
+            //TeachersAndStudentsDemo.Run();
             //AddAndSearchStudentsDemo.Run();
+            AllDemo.Run();
         }
     }
 }

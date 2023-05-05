@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BootCamp.Chapter
 {
@@ -8,6 +9,7 @@ namespace BootCamp.Chapter
         {
             School<MiddleSchoolStudent> middleSchool = new MiddleSchool();
             School<HighSchoolStudent> highSchool = new HighSchool();
+            //List<IStudent> allStudents = new List<IStudent>();
 
             Console.WriteLine("middleSchool students:");
             for (int i = 0; i < 10; i++)
@@ -15,6 +17,7 @@ namespace BootCamp.Chapter
                 MiddleSchoolStudent student = new MiddleSchoolStudent();
                 Console.WriteLine(student.Id);
                 middleSchool.Add(student);
+                //allStudents.Add(student);
             }
 
             Console.WriteLine("highSchool students:");
@@ -23,6 +26,7 @@ namespace BootCamp.Chapter
                 HighSchoolStudent student = new HighSchoolStudent();
                 Console.WriteLine(student.Id);
                 highSchool.Add(student);
+                //allStudents.Add(student);
             }
 
             ISchool<IStudent>[] schools = { middleSchool, highSchool };
@@ -33,6 +37,7 @@ namespace BootCamp.Chapter
             Console.WriteLine($"Student ID to search for: {id}");
 
             SearchInSchools(schools, id);
+
         }
 
         private static void SearchInSchools(ISchool<IStudent>[] schools, int id)

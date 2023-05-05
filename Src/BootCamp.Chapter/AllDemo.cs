@@ -1,9 +1,11 @@
-﻿using System;
+﻿using BootCamp.Chapter.Hints;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BootCamp.Chapter
 {
-    internal static class TeachersAndStudentsDemo
+    internal static class AllDemo
     {
 
         public static void Run()
@@ -14,13 +16,19 @@ namespace BootCamp.Chapter
             musicTeacher.ProduceMaterial();
             EnglishTeacher englishTeacher = new EnglishTeacher();
             englishTeacher.ProduceMaterial();
-            List<IStudent> allStudents = new List<IStudent>();
+            School<MiddleSchoolStudent> middleSchool = new MiddleSchool();
+            School<HighSchoolStudent> highSchool = new HighSchool();
+            //List<IStudent> allStudents = new List<IStudent>();
 
+
+
+            Console.WriteLine("middleSchool students:");
             for (int i = 0; i < 10; i++)
             {
                 MiddleSchoolStudent student = new MiddleSchoolStudent();
                 Console.WriteLine(student.Id);
-                allStudents.Add(student);
+                middleSchool.Add(student);
+                //allStudents.Add(student);
             }
 
             Console.WriteLine("highSchool students:");
@@ -28,10 +36,17 @@ namespace BootCamp.Chapter
             {
                 HighSchoolStudent student = new HighSchoolStudent();
                 Console.WriteLine(student.Id);
-                allStudents.Add(student);
+                highSchool.Add(student);
+                //allStudents.Add(student);
             }
 
-            foreach (IStudent student in allStudents)
+            List<IEnumerable<Student>> allStudents = new List<IEnumerable<Student>>();
+            allStudents.Add(middleSchool.Students);
+            allStudents.Add(highSchool.Students);
+
+            List<Student> students = allStudents.SelectMany(x => x).ToList();
+
+            foreach (IStudent student in students)
             {
             student.LearnFrom<MathTeacher, Math>(mathTeacher);
             student.LearnFrom<MusicTeacher, Music>(musicTeacher);

@@ -2,7 +2,7 @@
 
 namespace BootCamp.Chapter
 {
-    public abstract class School<TStudent> : ISchool<TStudent> where TStudent : IStudent
+    public abstract class School<TStudent> : ISchool<TStudent> where TStudent : Student
     {
         public List<TStudent> Students { get; }
 
