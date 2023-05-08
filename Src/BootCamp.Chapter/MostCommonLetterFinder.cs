@@ -10,7 +10,7 @@ namespace BootCamp.Chapter
         {
             if (string.IsNullOrEmpty(sentence) || sentence == " ") { throw new ArgumentNullException(nameof(sentence)); }
             char[] sentenceArr = sentence.ToCharArray();
-            Dictionary<char,int> map = new Dictionary<char,int>();
+            Dictionary<char, int> map = new Dictionary<char, int>();
             foreach (char ch in sentenceArr)
             {
                 if (map.ContainsKey(ch))
@@ -26,8 +26,8 @@ namespace BootCamp.Chapter
             int highestValue = 0;
             foreach (char ch in sentenceArr)
             {
-                if (map[ch] > highestValue) 
-                { 
+                if (map[ch] > highestValue)
+                {
                     highestValue = map[ch];
                     mostCommon = ch;
                 }

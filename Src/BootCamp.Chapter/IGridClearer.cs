@@ -8,4 +8,18 @@ namespace BootCamp.Chapter
     {
         void Clear();
     }
+
+    public class GridClearer2d : IGridClearer
+    {
+        public void Clear()
+        {
+        }
+    }
+
+    public class GridClearerJagged : IGridClearer
+    {
+        public void Clear()
+        {
+        }
+    }
 }
