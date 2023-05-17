@@ -10,7 +10,13 @@ namespace BootCamp.Chapter
         /// a) over 18, who do not live in UK, whose surename does not contain letter 'a'.
         /// </summary>
         /// <returns></returns>
-        public static bool IsA(Person person) => false;
+        public static bool IsA(Person person)
+        {
+            bool isOver18 = (person.Age >= 18);
+            bool doesntLiveInUK = !person.Country.Equals("United Kingdom");
+            bool doesntContainsA = !person.SureName.ToLower().Contains('a');
+            return isOver18 && doesntLiveInUK && doesntContainsA;
+        }
 
         /// <summary>
         /// b) under 18,  who do not live in UK, whose surename does not contain letter 'a'.  

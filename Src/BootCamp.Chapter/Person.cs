@@ -22,6 +22,12 @@ namespace BootCamp.Chapter
             Email = email;
             StreetAddress = streetAddress;
         }
+
+        public int Age()
+        {
+            TimeSpan edad = DateTime.Today - Birthday;
+            return (int)(edad.TotalDays / 365);
+        }
     }
 
 }
