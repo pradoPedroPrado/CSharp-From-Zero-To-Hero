@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
+using System.IO;
 
 namespace BootCamp.Chapter
 {
@@ -10,7 +11,29 @@ namespace BootCamp.Chapter
 
         public ContactsCenter(string peopleFile)
         {
-            // load people
+            _people = new List<Person>();
+            ParseFile(peopleFile);
+        }
+
+        private void ParseFile(string peopleFile)
+        {
+            if (peopleFile == null) { throw new ArgumentNullException(); }
+            if (!File.Exists(peopleFile)) { throw new FileNotFoundException(); }
+            if (peopleFile.Length == 0) { throw new Exception(); }
+            string[] lines = File.ReadAllLines(peopleFile);
+            bool header = true;
+            foreach (string line in lines)
+            {
+                if (header)
+                {
+                    header = false;
+                    continue;
+                }
+                string[] values = line.Split(',');
+                DateTime.TryParseExact(values[2], "M/d/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthday);
+                Person person = new Person(values[0], values[1], birthday, values[3], values[4], values[5], values[6]);
+                _people.Add(person);
+            }
         }
 
         /// <summary>
