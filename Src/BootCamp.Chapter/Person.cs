@@ -23,10 +23,13 @@ namespace BootCamp.Chapter
             StreetAddress = streetAddress;
         }
 
-        public int Age()
+        public int Age
         {
-            TimeSpan edad = DateTime.Today - Birthday;
-            return (int)(edad.TotalDays / 365);
+            get
+            {
+                TimeSpan edad = DateTime.Today - Birthday;
+                return (int)(edad.TotalDays / 365);
+            }
         }
     }
 

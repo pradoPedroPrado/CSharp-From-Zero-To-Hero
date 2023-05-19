@@ -23,13 +23,26 @@ namespace BootCamp.Chapter
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static bool IsB(Person person) => false;
+        public static bool IsB(Person person)
+        {
+            bool isUnder18 = (person.Age < 18);
+            bool doesntLiveInUK = !person.Country.Equals("United Kingdom");
+            bool doesntContainsA = !person.SureName.ToLower().Contains('a');
+            return isUnder18 && doesntLiveInUK && doesntContainsA;
+        }
+
 
         /// <summary>
         /// c) who do not live in UK, whose surename and name does not contain letter 'a'.  
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static bool IsC(Person person) => false;
+        public static bool IsC(Person person)
+        {
+            bool nameWithoutA = !person.Name.ToLower().Contains('a');
+            bool doesntLiveInUK = !person.Country.Equals("United Kingdom");
+            bool doesntContainsA = !person.SureName.ToLower().Contains('a');
+            return nameWithoutA && doesntLiveInUK && doesntContainsA;
+        }
     }
 }

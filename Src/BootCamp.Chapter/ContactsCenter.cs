@@ -44,6 +44,13 @@ namespace BootCamp.Chapter
         {
             var people = new List<Person>();
             // ToDo: implement applying filter.
+            foreach (Person person in _people)
+            {
+                if (predicate(person))
+                {
+                    people.Add(person); 
+                }
+            }
             return people;
         }
     }
